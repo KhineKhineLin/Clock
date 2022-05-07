@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clock/enums.dart';
 import 'package:flutter_clock/menu_info.dart';
+import 'package:flutter_clock/views/alarm_page.dart';
 import 'package:flutter_clock/views/clock_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -37,87 +38,93 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(child: Consumer<MenuInfo>(
             builder: (context, value, child) {
-              if (value.menuType != MenuType.clock) return Container();
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 60),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      fit: FlexFit.tight,
-                      child: Text(
-                        'Clock',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            formattedTime,
-                            style: TextStyle(color: Colors.white, fontSize: 64),
-                          ),
-                          Text(
-                            formattedDate,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                        flex: 4,
+              if (value.menuType == MenuType.clock)
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 60),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        flex: 1,
                         fit: FlexFit.tight,
-                        child: Align(
-                            alignment: Alignment.center,
-                            child: ClockView(
-                                size: MediaQuery.of(context).size.height / 4))),
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Timezone',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.language,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 16,
-                              ),
-                              Text(
-                                'UTC' + offsetSign + timezoneString,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                              )
-                            ],
-                          ),
-                        ],
+                        child: Text(
+                          'Clock',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              );
+                      Flexible(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              formattedTime,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 64),
+                            ),
+                            Text(
+                              formattedDate,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                          flex: 4,
+                          fit: FlexFit.tight,
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: ClockView(
+                                  size:
+                                      MediaQuery.of(context).size.height / 4))),
+                      Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Timezone',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.language,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Text(
+                                  'UTC' + offsetSign + timezoneString,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              else if (value.menuType == MenuType.alarm)
+                return AlarmPage();
+              else
+                return Container();
             },
           )),
         ],
